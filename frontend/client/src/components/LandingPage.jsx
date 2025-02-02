@@ -78,7 +78,7 @@ function LandingPage() {
                             <h3 className="text-xl font-semibold text-gray-800 mb-2">Crop Price Forecasting</h3>
                             <p className="text-gray-600">Predict the price of crops based on market trends.</p>
                             <div className="mt-4">
-                                <button className="px-6 py-2 bg-black text-white rounded-full">Learn More</button>
+                                <Link to={'crop-price-forecast'}><button className="px-6 py-2 bg-black text-white rounded-full">Learn More</button></Link>
                             </div>
                         </div>
                     </div>
