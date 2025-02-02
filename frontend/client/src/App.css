@@ -1,0 +1,21 @@
+#root {
+  margin: 0 auto;
+  text-align: center;
+}
+
+.model {
+  background-color: #82b45f;
+}
+
+.quote {
+  background-color: #8db36a;
+  width: 50%;
+  margin: 0 auto; /* Centers horizontally */
+  display: flex; /* Ensure flexbox layout */
+  justify-content: flex-start; /* Aligns content at the top */
+  align-items: center; /* Centers content horizontally */
+  text-align: center; /* Make text inside center aligned */
+}
+.navbar {
+  background-color: #4b6741;
+}
