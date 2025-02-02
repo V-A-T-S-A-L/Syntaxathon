@@ -55,7 +55,7 @@ export default function CropPriceForecast() {
     }
 
     return (
-        <div className="min-w-screen min-h-screen bg-green-50 py-12 px-4 sm:px-6 lg:px-8 mt-16">
+        <div className="min-w-screen min-h-screen bg-gradient-to-b from-green-100 to-green-200 py-12 px-4 sm:px-6 lg:px-8 mt-16">
             <div className="max-w-7xl mx-auto">
                 <h1 className="text-4xl font-bold text-green-800 mb-8 text-center">Crop Price Forecast</h1>
                 <div className="bg-white shadow-lg rounded-lg p-6 mb-8">
@@ -100,12 +100,12 @@ export default function CropPriceForecast() {
                     </div>
                 </div>
                 <div className="bg-white shadow-lg rounded-lg p-6 text-left">
-                    <h2 className="text-2xl font-semibold text-green-800 mb-4">Forecast Insights</h2>
-                    <p className="text-green-700 mb-2">
+                    <h2 className="text-2xl font-semibold text-gray-900 mb-4">Forecast Insights</h2>
+                    <p className="text-gray-800 mb-2">
                         The chart above shows the projected price trends for {selectedCrop} over the next {selectedTimeframe}.
                     </p>
-                    <p className="text-green-700 mb-2">Factors influencing this forecast include:</p>
-                    <ul className="list-disc list-inside text-green-600">
+                    <p className="text-gray-700 mb-2">Factors influencing this forecast include:</p>
+                    <ul className="list-disc list-inside text-gray-600 px-4">
                         <li>Historical price data</li>
                         <li>Seasonal trends</li>
                         <li>Global supply and demand</li>
