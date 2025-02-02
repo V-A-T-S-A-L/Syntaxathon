@@ -8,6 +8,7 @@ import Navbar from './components/Navbar'
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Signup from './components/Signup';
 import CropPriceForecast from './components/CropPriceForecast';
+import Finance from './components/Finance';
 
 function App() {
 
@@ -22,6 +23,7 @@ function App() {
 						<Route path='login' element={<Login />}/>
 						<Route path='signup' element={<Signup />}/>
 						<Route path='crop-price-forecast' element={<CropPriceForecast />}/> 
+						<Route path='financial-advisory' element={<Finance />}/>
 					</Routes>
 				<Footer />
 			</BrowserRouter>
