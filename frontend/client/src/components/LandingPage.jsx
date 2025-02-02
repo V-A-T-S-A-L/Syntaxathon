@@ -22,18 +22,19 @@ function LandingPage() {
 
                     {/* Buttons Below Text */}
                     <div className="mt-6 flex gap-4">
-                        <button 
+                        <button
                             className="bg-green-600 text-white font-bold py-2 px-6 rounded-full hover:bg-green-700 transition duration-300"
                             onClick={() => scrollToSection("get-started")}
                         >
                             Get Started
                         </button>
-                        <button 
-                            className="bg-gray-800 text-white font-bold py-2 px-6 rounded-full hover:bg-gray-900 transition duration-300"
-                            onClick={() => scrollToSection("footer")}
-                        >
-                            Contact Us
-                        </button>
+                        <Link to={'contact-us'}>
+                            <button
+                                className="bg-gray-800 text-white font-bold py-2 px-6 rounded-full hover:bg-gray-900 transition duration-300"
+                            >
+                                Contact Us
+                            </button>
+                        </Link>
                     </div>
                 </div>
 
@@ -125,7 +126,7 @@ function LandingPage() {
                                 title: "Loan Recommendation",
                                 description:
                                     "Receive tailored loan recommendations based on your financial health and business needs.",
-                                link: "#",
+                                link: "financial-advisory",
                             },
                         ].map((item, index) => (
                             <motion.div
@@ -150,8 +151,6 @@ function LandingPage() {
                     </div>
                 </div>
             </section>
-
-            {/* Footer Section (Contact Us) */}
         </>
     );
 }
