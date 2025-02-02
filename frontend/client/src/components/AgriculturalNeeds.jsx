@@ -40,14 +40,14 @@ const AgriculturalNeeds = () => {
     return (
         <div
             className="mt-14 min-w-screen min-h-screen bg-white p-6"
-            style={{
-                backgroundImage: `url(${backgroundImage})`,
-                backgroundRepeat: "no-repeat",
-                backgroundSize: "cover",      // Ensures the image covers the entire screen
-                backgroundPosition: "center", // Centers the image
-                width: "100vw",               // Full width
-                height: "110vh",              // Full height
-            }}
+            // style={{
+            //     backgroundImage: `url(${backgroundImage})`,
+            //     backgroundRepeat: "no-repeat",
+            //     backgroundSize: "cover",      // Ensures the image covers the entire screen
+            //     backgroundPosition: "center", // Centers the image
+            //     width: "100vw",               // Full width
+            //     height: "110vh",              // Full height
+            // }}
         >
             <div className="max-w-2xl mx-auto bg-white shadow-lg rounded-lg overflow-hidden">
                 <div className="bg-green-600 p-6">

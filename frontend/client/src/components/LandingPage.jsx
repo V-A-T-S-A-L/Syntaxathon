@@ -48,7 +48,7 @@ function LandingPage() {
                     "In the heart of agriculture, AI can sow the seeds for better access to finance and resources."
                 </h2>
             </div>
-            
+
             {/* Get Started Today Section */}
             <div className="get-started mt-16 px-4 mb-10">
                 <h2 className="text-3xl font-bold text-center text-gray-800 mb-6">Get Started Today</h2>
@@ -58,7 +58,10 @@ function LandingPage() {
                             <h3 className="text-xl font-semibold text-gray-800 mb-2">Income / Weather Prediction</h3>
                             <p className="text-gray-600">AI-powered forecasts for weather conditions and crop yield, helping farmers estimate income and plan efficiently.</p>
                             <div className="mt-4">
-                                <Link to={'predict-income&weather'}><button className="px-6 py-2 bg-black text-white rounded-full">Learn More</button></Link>
+                                <Link to={'predict-income&weather'}><button className="flex mx-auto hover:-translate-y-1 px-6 py-2 bg-black text-white rounded-full">Learn More&nbsp;&nbsp;<svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 14v4.833A1.166 1.166 0 0 1 16.833 20H5.167A1.167 1.167 0 0 1 4 18.833V7.167A1.166 1.166 0 0 1 5.167 6h4.618m4.447-2H20v5.768m-7.889 2.121 7.778-7.778" />
+                                </svg>
+                                </button></Link>
                             </div>
                         </div>
                     </div>
@@ -68,7 +71,10 @@ function LandingPage() {
                             <h3 className="text-xl font-semibold text-gray-800 mb-2">Agricultural Needs Prediction</h3>
                             <p className="text-gray-600">Predicts fertilizer, water, seed, pesticide, and nutrient requirements for your crops based on land size, crop type, etc.</p>
                             <div className="mt-4">
-                                <Link to={'agricultural-needs'}><button className="px-6 py-2 bg-black text-white rounded-full">Learn More</button></Link>
+                                <Link to={'agricultural-needs'}><button className="flex mx-auto hover:-translate-y-1 px-6 py-2 bg-black text-white rounded-full">Learn More&nbsp;&nbsp;<svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 14v4.833A1.166 1.166 0 0 1 16.833 20H5.167A1.167 1.167 0 0 1 4 18.833V7.167A1.166 1.166 0 0 1 5.167 6h4.618m4.447-2H20v5.768m-7.889 2.121 7.778-7.778" />
+                                </svg>
+                                </button></Link>
                             </div>
                         </div>
                     </div>
@@ -78,7 +84,10 @@ function LandingPage() {
                             <h3 className="text-xl font-semibold text-gray-800 mb-2">Crop Price Forecasting</h3>
                             <p className="text-gray-600">Predict the price of crops based on market trends.</p>
                             <div className="mt-4">
-                                <Link to={'crop-price-forecast'}><button className="px-6 py-2 bg-black text-white rounded-full">Learn More</button></Link>
+                                <Link to={'crop-price-forecast'}><button className="flex mx-auto hover:-translate-y-1 px-6 py-2 bg-black text-white rounded-full">Learn More&nbsp;&nbsp;<svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 14v4.833A1.166 1.166 0 0 1 16.833 20H5.167A1.167 1.167 0 0 1 4 18.833V7.167A1.166 1.166 0 0 1 5.167 6h4.618m4.447-2H20v5.768m-7.889 2.121 7.778-7.778" />
+                                </svg>
+                                </button></Link>
                             </div>
                         </div>
                     </div>
@@ -88,7 +97,10 @@ function LandingPage() {
                             <h3 className="text-xl font-semibold text-gray-800 mb-2">Loan Recommendation</h3>
                             <p className="text-gray-600">Receive tailored loan recommendations based on your financial health and business needs.</p>
                             <div className="mt-4">
-                                <button className="px-6 py-2 bg-black text-white rounded-full">Learn More</button>
+                                <button className="flex mx-auto hover:-translate-y-1 px-6 py-2 bg-black text-white rounded-full">Learn More&nbsp;&nbsp;<svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 14v4.833A1.166 1.166 0 0 1 16.833 20H5.167A1.167 1.167 0 0 1 4 18.833V7.167A1.166 1.166 0 0 1 5.167 6h4.618m4.447-2H20v5.768m-7.889 2.121 7.778-7.778" />
+                                </svg>
+                                </button>
                             </div>
                         </div>
                     </div>
