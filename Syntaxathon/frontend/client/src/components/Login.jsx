@@ -27,7 +27,7 @@ const Login = () => {
         setError("");
 
         try {
-            const response = await axios.post("http://localhost:5000/api/farmers/login", formData);
+            const response = await axios.post("https://syntaxathon-backend.vercel.app/api/farmers/login", formData);
             
             // Store the JWT token in localStorage
             localStorage.setItem("token", response.data.token);
