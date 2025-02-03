@@ -11,7 +11,7 @@ const agricultureNeedsRoutes = require("./routes/agricultureNeedsRoutes");
 
 const app = express();
 app.use(express.json());
-app.use(cors({ origin: "http://localhost:5173", methods: "GET,POST" })); // CORS settings
+app.use(cors({ origin: "https://agrifysyntaxathon.vercel.app/", methods: "GET,POST" })); // CORS settings
 
 // Debugging: Check environment variables
 // console.log("MONGO_URI:", process.env.MONGO_URI);
@@ -20,7 +20,7 @@ app.use(cors({ origin: "http://localhost:5173", methods: "GET,POST" })); // CORS
 
 // CORS configuration
 const corsOptions = {
-    origin: "http://localhost:5173", // Your React app URL
+    origin: "https://agrifysyntaxathon.vercel.app/", // Your React app URL
     methods: "GET,POST",
     allowedHeaders: "Content-Type",
   };
