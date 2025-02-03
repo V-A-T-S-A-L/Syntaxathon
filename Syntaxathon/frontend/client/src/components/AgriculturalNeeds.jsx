@@ -2,11 +2,21 @@
 
 import { useState, useEffect } from "react"
 import { Loader2, Sprout, Droplet, Wheat, Bug, FlaskRoundIcon as Flask } from "lucide-react"
+import { useNavigate } from "react-router-dom";
 
 const AgriculturalNeeds = () => {
-  useEffect(() => {
-    window.scrollTo(0, 0)
-  }, [])
+  const navigate = useNavigate();
+
+	useEffect(() => {
+		// Check for JWT in localStorage
+		const token = localStorage.getItem("token");
+		if (!token) {
+			// Redirect to login if no JWT token found
+			navigate("/login");
+		}
+
+		window.scrollTo(0, 0);
+	}, [navigate]);
 
   const [formData, setFormData] = useState({
     landSize: "",

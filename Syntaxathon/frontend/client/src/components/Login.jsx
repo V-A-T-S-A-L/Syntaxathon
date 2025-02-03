@@ -32,8 +32,8 @@ const Login = () => {
             // Store the JWT token in localStorage
             localStorage.setItem("token", response.data.token);
             
-            alert("Login successful!");
             navigate("/"); // Redirect to the homepage
+            location.reload();
         } catch (err) {
             console.error(err);
             setError(err.response?.data?.error || "Login failed! Please check your credentials.");
@@ -42,7 +42,7 @@ const Login = () => {
 
     return (
         <div
-            className="min-h-screen flex items-center justify-center p-6"
+            className="min-h-screen min-w-screen flex items-center justify-center p-6"
             style={{
                 backgroundImage: `url(${backgroundImage})`,
                 backgroundSize: "cover",

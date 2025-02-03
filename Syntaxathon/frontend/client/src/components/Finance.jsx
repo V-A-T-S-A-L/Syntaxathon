@@ -4,12 +4,22 @@ import RepaymentTracker from "./RepaymentTracker"
 import AgricultureSchemes from "./AgricultureSchemes"
 import PayAsYouEarn from "./PayAsYouEarn"
 import FinancialEducation from "./FinancialEducation"
+import { useNavigate } from "react-router-dom"
 
 const Finance = () => {
 
-    useEffect(() => {
-        window.scrollTo(0, 0)
-    }, [])
+  const navigate = useNavigate();
+
+	useEffect(() => {
+		// Check for JWT in localStorage
+		const token = localStorage.getItem("token");
+		if (!token) {
+			// Redirect to login if no JWT token found
+			navigate("/login");
+		}
+
+		window.scrollTo(0, 0);
+	}, [navigate]);
 
     const [activeTab, setActiveTab] = useState("eligibility")
 
