@@ -58,23 +58,85 @@ const TabButton = ({ active, onClick, children, icon }) => (
 )
 
 const IncomeForm = () => {
-	const [prediction, setPrediction] = useState(null)
+	const [prediction, setPrediction] = useState(null);
+	const [cropType, setCropType] = useState("");
+	const [landArea, setLandArea] = useState("");
+	const [expectedYield, setExpectedYield] = useState("");
+	const [marketPrice, setMarketPrice] = useState("");
 
-	const handleSubmit = (e) => {
-		e.preventDefault()
-		// Simulate prediction calculation
-		const randomIncome = Math.floor(Math.random() * 10000) + 5000
-		setPrediction(randomIncome)
-	}
+
+	const handleSubmit = async (e) => {
+		e.preventDefault();
+
+		const token = localStorage.getItem("token");
+		if (!token) {
+			alert("User not logged in");
+			return;
+		}
+
+		const formData = {
+			cropType,
+			landArea,
+			expectedYield,
+			marketPrice,
+			predictedIncome: Math.floor(Math.random() * 10000) + 5000 // Mock prediction
+		};
+
+		try {
+			const response = await fetch("http://localhost:5000/api/predict-income", {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+					"Authorization": `Bearer ${token}`
+				},
+				body: JSON.stringify(formData)
+			});
+
+			const data = await response.json();
+			if (response.ok) {
+				setPrediction(data.data.predictedIncome);
+			} else {
+				alert(data.message);
+			}
+		} catch (error) {
+			console.error("Error:", error);
+		}
+	};
+
 	// Varshilshah
 	return (
 		<div>
 			<h2 className="text-2xl font-bold text-green-700 mb-4">Income Prediction</h2>
 			<form onSubmit={handleSubmit} className="space-y-4 text-black">
-				<InputField label="Crop Type" type="text" placeholder="e.g., Wheat, Rice, Corn" />
-				<InputField label="Land Area (in acres)" type="number" placeholder="Enter land size" />
-				<InputField label="Expected Yield (kg)" type="number" placeholder="Enter expected yield" />
-				<InputField label="Market Price (per kg)" type="number" placeholder="Enter market price" />
+				<InputField
+					label="Crop Type"
+					type="text"
+					placeholder="e.g., Wheat, Rice, Corn"
+					value={cropType}
+					onChange={(e) => setCropType(e.target.value)}
+				/>
+				<InputField
+					label="Land Area (in acres)"
+					type="number"
+					placeholder="Enter land size"
+					value={landArea}
+					onChange={(e) => setLandArea(e.target.value)}
+				/>
+				<InputField
+					label="Expected Yield (kg)"
+					type="number"
+					placeholder="Enter expected yield"
+					value={expectedYield}
+					onChange={(e) => setExpectedYield(e.target.value)}
+				/>
+				<InputField
+					label="Market Price (per kg)"
+					type="number"
+					placeholder="Enter market price"
+					value={marketPrice}
+					onChange={(e) => setMarketPrice(e.target.value)}
+				/>
+
 				<button className="w-full bg-green-500 text-white py-3 rounded-md font-semibold hover:bg-green-600 transition-colors duration-200">
 					Predict Income
 				</button>
@@ -89,16 +151,18 @@ const IncomeForm = () => {
 	)
 }
 
-const InputField = ({ label, type, placeholder }) => (
+const InputField = ({ label, type, placeholder, value, onChange }) => (
 	<div>
 		<label className="block text-gray-700 font-medium mb-2">{label}</label>
 		<input
 			type={type}
 			className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
 			placeholder={placeholder}
+			value={value}
+			onChange={onChange}
 		/>
 	</div>
-)
+);
 
 const WeatherForecast = () => {
 	const weatherData = [

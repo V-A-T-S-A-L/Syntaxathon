@@ -6,15 +6,17 @@ const dotenv = require("dotenv");
 dotenv.config(); // Load environment variables
 
 const farmerRoutes = require("./routes/farmerRoutes"); // Import Routes
+const incomePredictionRoutes = require("./routes/incomePredictionRoutes");
+const agricultureNeedsRoutes = require("./routes/agricultureNeedsRoutes");
 
 const app = express();
 app.use(express.json());
 app.use(cors({ origin: "http://localhost:5173", methods: "GET,POST" })); // CORS settings
 
 // Debugging: Check environment variables
-console.log("MONGO_URI:", process.env.MONGO_URI);
-console.log("JWT_SECRET:", process.env.JWT_SECRET);
-console.log("PORT:", process.env.PORT);
+// console.log("MONGO_URI:", process.env.MONGO_URI);
+// console.log("JWT_SECRET:", process.env.JWT_SECRET);
+// console.log("PORT:", process.env.PORT);
 
 // CORS configuration
 const corsOptions = {
@@ -36,6 +38,8 @@ mongoose.connect(process.env.MONGO_URI, {
 
 // Use farmer routes
 app.use("/api/farmers", farmerRoutes);
+app.use("/api", incomePredictionRoutes);
+app.use("/api", agricultureNeedsRoutes);
 
 // Start the server
 const PORT = process.env.PORT || 5000;
