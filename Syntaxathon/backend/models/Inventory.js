@@ -1,12 +1,34 @@
 const mongoose = require("mongoose");
 
 const inventorySchema = new mongoose.Schema({
-  farmerId: { type: mongoose.Schema.Types.ObjectId, ref: "FarmerProfile", required: true }, // Linking to FarmerProfile
-  farmType: { type: String, required: true }, // Crop Farming, Dairy, Poultry, etc.
-  landSize: { type: Number, required: true }, // In acres or hectares
-  cropsGrown: [{ type: String }], // Array of crops (e.g., ["Wheat", "Rice"])
-  livestock: [{ type: String }], // Array of livestock (e.g., ["Cows", "Goats"])
-  machinery: [{ type: String }], // Array of owned machinery (e.g., ["Tractor", "Irrigation Pump"])
+  farmerId: { type: mongoose.Schema.Types.ObjectId, ref: "Farmer", required: true }, 
+  farmType: { type: String, required: true }, 
+  landSize: { type: Number, required: true }, 
+  inventory: {
+    crops: [{
+      name: { type: String, required: true }, 
+      yield: { type: Number, required: true },
+      year: { type: Number, required: true }, 
+    }],
+    livestock: [{
+      name: { type: String, required: true }, 
+      count: { type: Number, default: 0 }, 
+    }],
+    machinery: [{
+      name: { type: String, required: true },
+      count: { type: Number, default: 0 }, 
+    }]
+  },
+  monthlyFinance: {
+    revenue: [{
+      month: { type: String, required: true },
+      amount: { type: Number, required: true }, 
+    }],
+    expenses: [{
+      month: { type: String, required: true }, 
+      amount: { type: Number, required: true }, 
+    }]
+  }
 }, { timestamps: true });
 
 const Inventory = mongoose.model("Inventory", inventorySchema);

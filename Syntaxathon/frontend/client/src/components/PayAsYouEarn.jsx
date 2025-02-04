@@ -12,17 +12,19 @@ const PayAsYouEarn = () => {
     const loanNum = Number.parseFloat(loanAmount)
     const termNum = Number.parseInt(loanTerm)
 
-    // Enhanced calculation logic
-    const interestRate = 0.05 // 5% annual interest rate
+    // Updated interest rate and monthly interest rate
+    const interestRate = 0.09 // 9% annual interest rate for India
     const monthlyInterestRate = interestRate / 12
+
     const numerator = monthlyInterestRate * Math.pow(1 + monthlyInterestRate, termNum)
     const denominator = Math.pow(1 + monthlyInterestRate, termNum) - 1
     const monthlyPayment = loanNum * (numerator / denominator)
 
-    // Adjust based on income (simplified version)
+    // Adjust based on income (30% for a more conservative approach)
     const adjustedPayment = Math.min(monthlyPayment, incomeNum * 0.3)
 
-    setPaymentAmount(adjustedPayment.toFixed(2))
+    // Round to the nearest rupee for more accuracy
+    setPaymentAmount(Math.round(adjustedPayment))
   }
 
   return (
@@ -30,11 +32,11 @@ const PayAsYouEarn = () => {
       <h2>Pay As You Earn Calculator</h2>
       <form onSubmit={calculatePayment}>
         <div className="form-group">
-          <label htmlFor="income">Monthly Income ($):</label>
+          <label htmlFor="income">Monthly Income (₹):</label>
           <input type="number" id="income" value={income} onChange={(e) => setIncome(e.target.value)} required />
         </div>
         <div className="form-group">
-          <label htmlFor="loanAmount">Loan Amount ($):</label>
+          <label htmlFor="loanAmount">Loan Amount (₹):</label>
           <input
             type="number"
             id="loanAmount"
@@ -58,7 +60,7 @@ const PayAsYouEarn = () => {
       {paymentAmount && (
         <div className="payment-result">
           <h3>Recommended Monthly Payment:</h3>
-          <p>${paymentAmount}</p>
+          <p>₹{paymentAmount}</p>
           <small>This amount is adjusted based on your income and loan terms.</small>
         </div>
       )}
@@ -128,4 +130,3 @@ const PayAsYouEarn = () => {
 }
 
 export default PayAsYouEarn
-

@@ -10,6 +10,7 @@ import Signup from './components/Signup';
 import CropPriceForecast from './components/CropPriceForecast';
 import Finance from './components/Finance';
 import ContactUs from './components/ContactUs';
+import FarmerDashboard from './components/FarmerDashboard';
 
 function App() {
 
@@ -26,6 +27,7 @@ function App() {
 						<Route path='crop-price-forecast' element={<CropPriceForecast />}/> 
 						<Route path='financial-advisory' element={<Finance />}/>
 						<Route path='contact-us' element={<ContactUs />}/>
+						<Route path='dashboard' element={<FarmerDashboard />}/>
 					</Routes>
 				<Footer />
 			</BrowserRouter>

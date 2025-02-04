@@ -8,10 +8,11 @@ dotenv.config(); // Load environment variables
 const farmerRoutes = require("./routes/farmerRoutes"); // Import Routes
 const incomePredictionRoutes = require("./routes/incomePredictionRoutes");
 const agricultureNeedsRoutes = require("./routes/agricultureNeedsRoutes");
+const loanRoutes = require("./routes/loanRoutes");
 
 const app = express();
 app.use(express.json());
-app.use(cors({ origin: "https://agrifysyntaxathon.vercel.app/", methods: "GET,POST" })); // CORS settings
+app.use(cors({ origin: "http://localhost:5173", methods: "GET,POST" })); // CORS settings
 
 // Debugging: Check environment variables
 // console.log("MONGO_URI:", process.env.MONGO_URI);
@@ -40,6 +41,7 @@ mongoose.connect(process.env.MONGO_URI, {
 app.use("/api/farmers", farmerRoutes);
 app.use("/api", incomePredictionRoutes);
 app.use("/api", agricultureNeedsRoutes);
+app.use("/api/loans", loanRoutes);
 
 // Start the server
 const PORT = process.env.PORT || 5000;
