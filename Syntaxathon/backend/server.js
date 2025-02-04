@@ -21,7 +21,7 @@ app.use(cors({ origin: "http://localhost:5173", methods: "GET,POST" })); // CORS
 
 // CORS configuration
 const corsOptions = {
-    origin: "https://agrifysyntaxathon.vercel.app/", // Your React app URL
+    origin: "http://localhost:5173/", // Your React app URL
     methods: "GET,POST",
     allowedHeaders: "Content-Type",
   };

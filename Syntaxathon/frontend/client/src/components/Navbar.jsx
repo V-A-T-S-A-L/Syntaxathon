@@ -125,7 +125,7 @@ function Navbar() {
           Home
         </Link>
         <Link
-          to={"about"}
+          to={"/"}
           className="flex items-center text-lg text-gray-200 hover:text-green-400 transition-transform duration-300 ease-in-out transform hover:scale-110"
           onClick={() => setMenuOpen(false)} // Close menu when item is clicked
         >
@@ -151,9 +151,8 @@ function Navbar() {
               Profile
             </Link>
             <button
-              onClick={handleLogout}
               className="flex items-center text-lg text-red-500 hover:text-green-400 transition-transform duration-300 ease-in-out transform hover:scale-110"
-              onClick={() => setMenuOpen(false)} // Close menu when item is clicked
+              onClick={() =>{handleLogout(); setMenuOpen(false);}} // Close menu when item is clicked
             >
               <FaSignInAlt className="mr-2 text-xl" />
               Logout

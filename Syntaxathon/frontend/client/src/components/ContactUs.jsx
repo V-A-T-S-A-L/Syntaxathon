@@ -1,32 +1,37 @@
 import React from "react";
-
+import backgroundImage from "../assets/contactus.jpg";
 const ContactUs = () => {
     return (
-        <div className="min-h-screen min-w-screen bg-green-100 flex flex-col items-center py-10">
-            <h1 className="text-4xl font-bold text-green-800 mb-6 mt-24">Contact Us</h1>
-            <div className="w-full max-w-4xl bg-white shadow-lg rounded-2xl p-8 flex flex-col md:flex-row gap-6">
+        <div className="min-h-screen min-w-screen flex flex-col items-center py-10"
+        style={{
+                                backgroundImage: `url(${backgroundImage})`,
+                                backgroundSize: "cover",
+                                backgroundPosition: "center",
+                            }}>
+            <h1 className="text-4xl font-bold text-white mb-6 mt-24">Contact Us</h1>
+            <div className="w-full max-w-4xl backdrop-blur border-white border-2 shadow-lg rounded-2xl p-8 flex flex-col md:flex-row gap-6">
                 {/* Contact Form */}
                 <div className="w-full md:w-1/2">
-                    <h2 className="text-2xl font-semibold text-green-700 mb-4">
+                    <h2 className="text-2xl font-semibold text-white mb-4">
                         Get in Touch
                     </h2>
-                    <form className="flex flex-col gap-4 text-black">
+                    <form className="flex flex-col gap-4 text-white">
                         <input
                             type="text"
                             placeholder="Your Name"
-                            className="p-3 border border-green-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+                            className="p-3 border border-white rounded-lg focus:outline-none focus:ring-2 focus:ring-white"
                         />
                         <input
                             type="email"
                             placeholder="Your Email"
-                            className="p-3 border border-green-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
-                        />
+                            className="p-3 border border-white rounded-lg focus:outline-none focus:ring-2 focus:ring-white"
+                            />
                         <textarea
                             placeholder="Your Message"
                             rows="4"
-                            className="p-3 border border-green-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+                            className="p-3 border border-white rounded-lg focus:outline-none focus:ring-2 focus:ring-white"
                         ></textarea>
-                        <button className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700">
+                        <button className="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-700">
                             Send Message
                         </button>
                     </form>
@@ -34,8 +39,8 @@ const ContactUs = () => {
 
                 {/* Google Maps */}
                 <div className="w-full md:w-1/2">
-                    <h2 className="text-2xl font-semibold text-green-700 mb-4">Our Location</h2>
-                    <div className="w-full h-64 border-2 border-green-300 rounded-lg overflow-hidden">
+                    <h2 className="text-2xl font-semibold text-WHITE mb-4">Our Location</h2>
+                    <div className="w-full h-64 border-2 border-white rounded-lg overflow-hidden">
                         <iframe
                             title="Google Maps Location"
                             className="w-full h-full"

@@ -1,222 +1,258 @@
-"use client";
-
-import { useState, useEffect } from "react";
-import { Loader2 } from "lucide-react";
-import { useNavigate } from "react-router-dom";
-import { GoogleGenerativeAI } from '@google/generative-ai';
+import { useState, useEffect } from "react"
+import { useNavigate } from "react-router-dom"
+import { GoogleGenerativeAI } from "@google/generative-ai"
+import { Sprout, Droplet, Wheat, Bug, FlaskConical } from "lucide-react"
+import backgroundImage from "../assets/agriculturalneeds.jpg";
 
 const AgriculturalNeeds = () => {
-	const navigate = useNavigate();
+  const navigate = useNavigate()
 
-	useEffect(() => {
-		const token = localStorage.getItem("token");
-		if (!token) {
-			navigate("/login");
-		}
-		window.scrollTo(0, 0);
-	}, [navigate]);
+  useEffect(() => {
+    const token = localStorage.getItem("token")
+    if (!token) {
+      navigate("/login")
+    }
+    window.scrollTo(0, 0)
+  }, [navigate])
 
-	const [formData, setFormData] = useState({
-		landSize: "",
-		cropType: "",
-		soilType: "",
-		season: "",
-	});
+  const [formData, setFormData] = useState({
+    landSize: "",
+    cropType: "",
+    soilType: "",
+    season: "",
+  })
 
-	const [prediction, setPrediction] = useState({
-		fertilizer: "",
-		water: "",
-		seeds: "",
-		pesticide: "",
-		nutrients: "",
-	});
-	const [isLoading, setIsLoading] = useState(false);
+  const [prediction, setPrediction] = useState(null)
+  const [isLoading, setIsLoading] = useState(false)
 
-	const handleChange = (e) => {
-		setFormData({ ...formData, [e.target.name]: e.target.value });
-	};
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value })
+  }
 
-	const calculatePrediction = async (formData) => {
-		try {
-			const genAI = new GoogleGenerativeAI("AIzaSyDluNAD8Ytq_1OkvIP83HUvtPWB023xPJ8");
-			const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+  const calculatePrediction = async (formData) => {
+    try {
+      const genAI = new GoogleGenerativeAI("AIzaSyDluNAD8Ytq_1OkvIP83HUvtPWB023xPJ8")
+      const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" })
 
-			const chatSession = model.startChat({
-				generationConfig: {
-					temperature: 1,
-					topP: 0.95,
-					topK: 64,
-					maxOutputTokens: 8192,
-					responseMimeType: "text/plain",
-				},
-			});
+      const chatSession = model.startChat({
+        generationConfig: {
+          temperature: 1,
+          topP: 0.95,
+          topK: 64,
+          maxOutputTokens: 8192,
+          responseMimeType: "text/plain",
+        },
+      })
 
-			const example = {
-				fertilizer: "1200",
-				water: "1500",
-				seeds: "500",
-				pesticide: "100",
-				nutrients: "250"
-			};
+      const example = {
+        fertilizer: "1200",
+        water: "1500",
+        seeds: "500",
+        pesticide: "100",
+        nutrients: "250",
+      }
 
-			const query = `Based on the following details, suggest the predicted requirements of fertilizer, water, seeds, pesticide, nutrients in following format ${example} for farming: Land Size: ${formData.landSize} acres, Crop Type: ${formData.cropType}, Soil Type: ${formData.soilType}, Season: ${formData.season}. Don't speak more just give numerical values for the appropriate fields.`;
+      const query = `Based on the following details, suggest the predicted requirements of fertilizer, water, seeds, pesticide, nutrients in following format ${example} for farming: Land Size: ${formData.landSize} acres, Crop Type: ${formData.cropType}, Soil Type: ${formData.soilType}, Season: ${formData.season}. Don't speak more just give numerical values for the appropriate fields.`
 
-			const result = await chatSession.sendMessage(query);
-			const responseText = await result.response.text();
+      const result = await chatSession.sendMessage(query)
+      const responseText = await result.response.text()
 
-			console.warn(responseText);
+      console.warn(responseText)
 
-			const parsedResponse = {
-				fertilizer: responseText.match(/"fertilizer":\s*(\d+)/)?.[1],
-				water: responseText.match(/"water":\s*(\d+)/)?.[1],
-				seeds: responseText.match(/"seeds":\s*(\d+)/)?.[1],
-				pesticide: responseText.match(/"pesticide":\s*(\d+)/)?.[1],
-				nutrients: responseText.match(/"nutrients":\s*(\d+)/)?.[1],
-			};
-			
-			setPrediction(parsedResponse);
-			return parsedResponse;
-		} catch (error) {
-			console.error("Error with Gemini AI:", error);
-			return null;
-		}
-	};
+      const parsedResponse = {
+        fertilizer: responseText.match(/"fertilizer":\s*(\d+)/)?.[1] + " kg",
+        water: responseText.match(/"water":\s*(\d+)/)?.[1] + " liters",
+        seeds: responseText.match(/"seeds":\s*(\d+)/)?.[1] + " kg",
+        pesticide: responseText.match(/"pesticide":\s*(\d+)/)?.[1] + " liters",
+        nutrients: responseText.match(/"nutrients":\s*(\d+)/)?.[1] + " kg",
+      }
 
-	const handlePredict = async () => {
-		setIsLoading(true);
-		const token = localStorage.getItem("token");
+      setPrediction(parsedResponse)
+      return parsedResponse
+    } catch (error) {
+      console.error("Error with Gemini AI:", error)
+      return null
+    }
+  }
 
-		try {
-			// Call the Gemini API to get predictions
-			const predictionData = await calculatePrediction(formData);
-			if (!predictionData) {
-				console.error("Failed to fetch prediction data");
-				return;
-			}
+  const handlePredict = async () => {
+    setIsLoading(true)
+    const token = localStorage.getItem("token")
 
-			// Send prediction data along with the form data to the backend
-			const response = await fetch("http://localhost:5000/api/agriculture-needs", {
-				method: "POST",
-				headers: {
-					"Content-Type": "application/json",
-					Authorization: `Bearer ${token}`,
-				},
-				body: JSON.stringify({
-					...formData,
-					prediction: predictionData, // Send the generated prediction data from Gemini
-				}),
-			});
+    try {
+      const predictionData = await calculatePrediction(formData)
+      if (!predictionData) {
+        console.error("Failed to fetch prediction data")
+        return
+      }
 
-			const data = await response.json();
-		} catch (error) {
-			console.error("Error:", error);
-		} finally {
-			setIsLoading(false);
-		}
-	};
+      await fetch("http://localhost:5000/api/agriculture-needs", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          ...formData,
+          prediction: predictionData,
+        }),
+      })
+    } catch (error) {
+      console.error("Error:", error)
+    } finally {
+      setIsLoading(false)
+    }
+  }
 
-
-	return (
-		<div className="min-w-screen min-h-[calc(100vh-56px)] bg-gradient-to-b from-green-100 to-green-200 p-6 flex items-center justify-center mt-12">
-			<div className="w-full max-w-2xl bg-white shadow-lg rounded-lg overflow-hidden">
-				<div className="bg-green-600 p-6">
-					<h2 className="text-3xl font-bold text-white mb-2 text-center">Agricultural Needs Prediction</h2>
-					<p className="text-green-100 text-center">Plan your farming resources efficiently</p>
-				</div>
-
-				<div className="p-6 space-y-6">
-					<div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-						<div>
-							<label className="block text-gray-700 font-medium mb-2" htmlFor="landSize">
-								Land Size (acres)
-							</label>
-							<input
-								type="number"
-								id="landSize"
-								name="landSize"
-								value={formData.landSize}
-								onChange={handleChange}
-								className="w-full p-3 border border-gray-300 rounded-md text-black focus:ring-2 focus:ring-green-500 focus:border-transparent transition"
-								placeholder="Enter land size"
-							/>
-						</div>
-
-						<div>
-							<label className="block text-gray-700 font-medium mb-2" htmlFor="cropType">
-								Crop Type
-							</label>
-							<input
-								type="text"
-								id="cropType"
-								name="cropType"
-								value={formData.cropType}
-								onChange={handleChange}
-								className="w-full p-3 border border-gray-300 rounded-md text-black focus:ring-2 focus:ring-green-500 focus:border-transparent transition"
-								placeholder="Enter crop type"
-							/>
-						</div>
-
-						<div>
-							<label className="block text-gray-700 font-medium mb-2" htmlFor="soilType">
-								Soil Type
-							</label>
-							<select
-								id="soilType"
-								name="soilType"
-								value={formData.soilType}
-								onChange={handleChange}
-								className="w-full p-3 border border-gray-300 rounded-md text-black focus:ring-2 focus:ring-green-500 focus:border-transparent transition"
-							>
-								<option value="">Select Soil Type</option>
-								<option value="sandy">Sandy</option>
-								<option value="loamy">Loamy</option>
-								<option value="clayey">Clayey</option>
-							</select>
-						</div>
-
-						<div>
-							<label className="block text-gray-700 font-medium mb-2" htmlFor="season">
-								Season
-							</label>
-							<select
-								id="season"
-								name="season"
-								value={formData.season}
-								onChange={handleChange}
-								className="w-full p-3 border border-gray-300 rounded-md text-black focus:ring-2 focus:ring-green-500 focus:border-transparent transition"
-							>
-								<option value="">Select Season</option>
-								<option value="summer">Summer</option>
-								<option value="winter">Winter</option>
-								<option value="monsoon">Monsoon</option>
-							</select>
-						</div>
-					</div>
-
-					<button
-						onClick={handlePredict}
-						className="w-full bg-green-600 text-white py-3 rounded-md hover:bg-green-700"
-						disabled={isLoading}
+  return (
+    <div className="min-h-screen min-w-screen mt-12 py-12 px-4 sm:px-6 lg:px-8"
+		style={{
+						backgroundImage: `url(${backgroundImage})`,
+						backgroundSize: "cover",
+						backgroundPosition: "center",
+					}}
 					>
-						{isLoading ? <Loader2 className="animate-spin" /> : "Predict Requirements"}
-					</button>
+      <div className="max-w-4xl mx-auto ">
+        <div className="border-2 border-green-400 shadow-xl rounded-lg overflow-hidden bg-white shadow-md">
+          <div className="bg-green-600 px-6 py-8 text-center shadow-md">
+            <h2 className="text-3xl font-extrabold text-white">Agricultural Needs Prediction</h2>
+            <p className="mt-2 text-green-100">Plan your farming resources efficiently</p>
+          </div>
 
-					{prediction && (
-						<div className="mt-6 text-black">
-							<h3 className="text-lg font-semibold">Predicted Requirements:</h3>
-							<ul className="space-y-2 mt-2">
-								<li>Fertilizer: {prediction.fertilizer} kg</li>
-								<li>Water: {prediction.water} litres</li>
-								<li>Seeds: {prediction.seeds} kg</li>
-								<li>Pesticide: {prediction.pesticide} litres</li>
-								<li>Nutrients: {prediction.nutrients} kg</li>
-							</ul>
-						</div>
-					)}
-				</div>
-			</div>
-		</div>
-	);
-};
+          <div className="p-6 sm:p-10 space-y-8 text-black shadow-md">
+            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 ">
+              <InputField
+                label="Land Size (acres)"
+                name="landSize"
+                type="number"
+                value={formData.landSize}
+                handleChange={handleChange}
+              />
+              <InputField
+                label="Crop Type"
+                name="cropType"
+                type="text"
+                value={formData.cropType}
+                handleChange={handleChange}
+              />
+              <SelectField
+                label="Soil Type"
+                name="soilType"
+                value={formData.soilType}
+                handleChange={handleChange}
+                options={["Sandy", "Loamy", "Clayey"]}
+              />
+              <SelectField
+                label="Season"
+                name="season"
+                value={formData.season}
+                handleChange={handleChange}
+                options={["Summer", "Winter", "Monsoon"]}
+              />
+            </div>
 
-export default AgriculturalNeeds;
+            <button
+              onClick={handlePredict}
+              className="w-full bg-green-600 text-white py-3 px-6 rounded-md text-lg font-semibold hover:bg-green-900 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50 transition duration-300 ease-in-out transform hover:-translate-y-1 hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
+              disabled={isLoading || !formData.landSize || !formData.cropType || !formData.soilType || !formData.season}
+            >
+              {isLoading ? (
+                <div className="flex items-center justify-center">
+                  <svg className="animate-spin h-5 w-5 mr-3" viewBox="0 0 24 24">
+                    <circle
+                      className="opacity-25"
+                      cx="12"
+                      cy="12"
+                      r="10"
+                      stroke="currentColor"
+                      strokeWidth="4"
+                    ></circle>
+                    <path
+                      className="opacity-75"
+                      fill="currentColor"
+                      d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                    ></path>
+                  </svg>
+                  Predicting...
+                </div>
+              ) : (
+                "Predict Requirements"
+              )}
+            </button>
+          </div>
+
+          {prediction && (
+            <div className="bg-green-50 p-6 sm:p-10 border-t-2 border-green-100">
+              <h3 className="text-2xl font-bold text-green-800 mb-6">Predicted Requirements</h3>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <PredictionItem icon={<SproutIcon />} label="Fertilizer" value={prediction.fertilizer} />
+                <PredictionItem icon={<DropletIcon />} label="Water" value={prediction.water} />
+                <PredictionItem icon={<WheatIcon />} label="Seeds" value={prediction.seeds} />
+                <PredictionItem icon={<BugIcon />} label="Pesticide" value={prediction.pesticide} />
+                <PredictionItem icon={<FlaskIcon />} label="Nutrients" value={prediction.nutrients} />
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  )
+}
+
+const InputField = ({ label, name, type, value, handleChange }) => (
+  <div>
+    <label className="block text-sm font-medium text-gray-700 mb-1" htmlFor={name}>
+      {label}
+    </label>
+    <input
+      type={type}
+      id={name}
+      name={name}
+      value={value}
+      onChange={handleChange}
+      className="w-full p-3 border border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500 transition duration-300 ease-in-out"
+    />
+  </div>
+)
+
+const SelectField = ({ label, name, value, handleChange, options }) => (
+  <div>
+    <label className="block text-sm font-medium text-gray-700 mb-1" htmlFor={name}>
+      {label}
+    </label>
+    <select
+      id={name}
+      name={name}
+      value={value}
+      onChange={handleChange}
+      className="w-full p-3 border border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500 transition duration-300 ease-in-out"
+    >
+      <option value="">Select {label}</option>
+      {options.map((option) => (
+        <option key={option} value={option.toLowerCase()}>
+          {option}
+        </option>
+      ))}
+    </select>
+  </div>
+)
+
+const PredictionItem = ({ icon, label, value }) => (
+  <div className="flex items-center space-x-4 bg-white p-4 rounded-lg shadow-md transition duration-300 ease-in-out hover:shadow-lg">
+    <div className="flex-shrink-0 text-green-600">{icon}</div>
+    <div>
+      <p className="text-sm font-medium text-gray-500">{label}</p>
+      <p className="text-lg font-semibold text-gray-900">{value}</p>
+    </div>
+  </div>
+)
+
+// Custom SVG icons
+const SproutIcon = () => <Sprout className="h-6 w-6" />
+const DropletIcon = () => <Droplet className="h-6 w-6" />
+const WheatIcon = () => <Wheat className="h-6 w-6" />
+const BugIcon = () => <Bug className="h-6 w-6" />
+const FlaskIcon = () => <FlaskConical className="h-6 w-6" />
+
+export default AgriculturalNeeds
+
