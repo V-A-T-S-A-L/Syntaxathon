@@ -10,6 +10,10 @@ import {
     Tooltip,
     Legend,
 } from "chart.js"
+<<<<<<< HEAD
+=======
+import { useNavigate } from "react-router-dom";
+>>>>>>> f00b114 (final by joshua)
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend)
 
@@ -22,9 +26,24 @@ const generateMockData = (dataPoints) => {
 
 export default function CropPriceForecast() {
 
+<<<<<<< HEAD
     useEffect(() => {
         window.scrollTo(0, 0)
     }, [])
+=======
+    const navigate = useNavigate();
+
+	useEffect(() => {
+		// Check for JWT in localStorage
+		const token = localStorage.getItem("token");
+		if (!token) {
+			// Redirect to login if no JWT token found
+			navigate("/login");
+		}
+
+		window.scrollTo(0, 0);
+	}, [navigate]);
+>>>>>>> f00b114 (final by joshua)
 
     const [selectedCrop, setSelectedCrop] = useState(crops[0])
     const [selectedTimeframe, setSelectedTimeframe] = useState(timeframes[0])
