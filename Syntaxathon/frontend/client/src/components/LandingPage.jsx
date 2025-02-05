@@ -61,7 +61,7 @@ function LandingPage() {
                     </div>
 
                     {/* Spline Model (Position Unchanged) */}
-                    <div className="w-1/2 sm:w-4/5 h-auto sm:h-125 rounded-lg overflow-hidden mt-12 shadow-">
+                    <div className="hidden md:block w-1/2 sm:w-4/5 h-auto sm:h-125 rounded-lg overflow-hidden mt-12">
                         <Spline scene="https://prod.spline.design/zyubwNwX4c1oX1oh/scene.splinecode" className="w-1/2 h-full" />
                     </div>
                 </div>
